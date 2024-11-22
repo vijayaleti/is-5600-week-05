@@ -93,25 +93,13 @@ async function editOrder(req, res, next) {
 }
 
 async function deleteOrder(req, res, next) {
-  try {
-    const { id } = req.params;
+  const { id } = req.params
 
-    console.log(`Attempting to delete order with ID: ${id}`);
-
-    // Call the Orders service to delete the order
-    const deletedOrder = await Orders.destroy(id);
-
-    if (!deletedOrder) {
-      console.log(`Order with ID ${id} not found.`);
-      return res.status(404).json({ error: `Order with ID ${id} not found` });
-    }
-
-    console.log(`Order with ID ${id} deleted successfully.`);
-    res.status(200).json({ message: `Order with ID ${id} deleted successfully` });
-  } catch (error) {
-    console.error(`Error occurred while deleting order with ID ${req.params.id}:`, error.message);
-    res.status(500).json({ error: 'An error occurred while deleting the order' });
+  const deletedOrder = await Orders.destroy(id)
+  if (!deletedOrder) {
+    return res.status(404).json({ error: 'Order not found' })
   }
+  res.status(204).json({ message: `Order with ID ${id} deleted successfully` })
 }
 
 

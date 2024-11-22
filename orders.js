@@ -64,8 +64,8 @@ async function create (fields) {
 }
 
 async function edit(id, change) {
-    const order = await Order.findById(id);
-    if (!order) throw new Error('Order not found');
+    const order = await Order.findById(id)
+    if (!order) throw new Error('Order not found')
   
     // Update order with new values from `change`
     Object.assign(order, change);
@@ -74,12 +74,15 @@ async function edit(id, change) {
     return order;
 }
 
-async function destroy(id) {
-    const order = await Order.findById(id); 
-    if (!order) throw new Error('Order not found');
-    await order.remove();
-    return order;
-  }
+async function destroy(_id) {
+  const order = await Order.findById(_id)
+
+  if (!order) throw new Error('Order not found')
+  await Order.deleteOne({ _id })
+  return { message: `Order with ID ${_id} deleted successfully` }
+}
+
+
   
 
 module.exports = {
@@ -87,6 +90,6 @@ module.exports = {
     get,
     list,
     edit,
-    destroy
+    destroy,
 }
 
